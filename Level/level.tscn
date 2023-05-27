@@ -1,0 +1,124 @@
+[gd_scene load_steps=8 format=3 uid="uid://d3q0yardmjreu"]
+
+[ext_resource type="PackedScene" uid="uid://c30ifm2tq7dwb" path="res://Paddle/paddle.tscn" id="1_mnguo"]
+[ext_resource type="Script" path="res://Level/level.gd" id="1_nf5m3"]
+[ext_resource type="PackedScene" uid="uid://dekm3qeve6atg" path="res://Ball/ball.tscn" id="4_5e7xn"]
+[ext_resource type="Script" path="res://Level/Pause.gd" id="4_i2j7h"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_kcf3m"]
+a = Vector2(680, 1)
+b = Vector2(-20, 1)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_fof47"]
+a = Vector2(683, -1)
+b = Vector2(-17, -1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d21c7"]
+size = Vector2(21, 701)
+
+[node name="Level" type="Node"]
+script = ExtResource("1_nf5m3")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 0.54902)
+
+[node name="Ball" parent="." instance=ExtResource("4_5e7xn")]
+position = Vector2(350, 350)
+collision_mask = 9
+
+[node name="Paddle1" parent="." instance=ExtResource("1_mnguo")]
+texture_filter = 1
+position = Vector2(50, 400)
+
+[node name="Paddle2" parent="." instance=ExtResource("1_mnguo")]
+texture_filter = 1
+position = Vector2(650, 300)
+rotation = 3.14159
+
+[node name="TopWall" type="StaticBody2D" parent="."]
+position = Vector2(0, 2)
+collision_layer = 8
+
+[node name="Top" type="CollisionShape2D" parent="TopWall"]
+position = Vector2(20, -3)
+shape = SubResource("SegmentShape2D_kcf3m")
+
+[node name="BottomWall" type="StaticBody2D" parent="."]
+position = Vector2(0, 2)
+collision_layer = 8
+
+[node name="Bottom" type="CollisionShape2D" parent="BottomWall"]
+position = Vector2(17, 699)
+shape = SubResource("SegmentShape2D_fof47")
+
+[node name="RightBoundary" type="Area2D" parent="."]
+position = Vector2(0, 2)
+collision_layer = 4
+collision_mask = 2
+
+[node name="Right" type="CollisionShape2D" parent="RightBoundary"]
+position = Vector2(710, 348)
+shape = SubResource("RectangleShape2D_d21c7")
+
+[node name="LeftBoundary" type="Area2D" parent="."]
+position = Vector2(0, 2)
+collision_layer = 4
+collision_mask = 2
+
+[node name="Left" type="CollisionShape2D" parent="LeftBoundary"]
+position = Vector2(-10.5, 348.5)
+shape = SubResource("RectangleShape2D_d21c7")
+
+[node name="Paddle1StartPos" type="Marker2D" parent="."]
+position = Vector2(50, 400)
+
+[node name="Paddle2StartPos" type="Marker2D" parent="."]
+position = Vector2(650, 300)
+
+[node name="BallStartPos" type="Marker2D" parent="."]
+position = Vector2(350, 350)
+
+[node name="UI" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("4_i2j7h")
+
+[node name="State" type="Label" parent="UI"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -169.0
+offset_top = -37.0
+offset_right = 169.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press space to do stuff"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Score" type="Label" parent="UI"]
+process_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -39.0
+offset_top = 10.0
+offset_right = 39.0
+offset_bottom = 33.0
+grow_horizontal = 2
+text = "0  -  0"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[connection signal="body_entered" from="RightBoundary" to="." method="_on_right_boundary_body_entered"]
+[connection signal="body_entered" from="LeftBoundary" to="." method="_on_left_boundary_body_entered"]
