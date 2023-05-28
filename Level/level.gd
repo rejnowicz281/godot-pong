@@ -10,10 +10,10 @@ func reset():
 func _ready():
 	reset()
 
-func _on_left_boundary_body_entered(body):
+func _on_left_boundary_area_entered(area):
 	$Paddle2.score += 1
 	reset()
 
-func _on_right_boundary_body_entered(body):
+func _on_right_boundary_area_entered(area):
 	$Paddle1.score += 1
 	reset()
