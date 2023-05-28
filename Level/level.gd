@@ -9,6 +9,7 @@ func reset():
 
 func _ready():
 	reset()
+	$Paddle1.bot = true
 
 func _on_left_boundary_area_entered(area):
 	$Paddle2.score += 1

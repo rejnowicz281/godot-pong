@@ -39,7 +39,6 @@ position = Vector2(50, 400)
 [node name="Paddle2" parent="." instance=ExtResource("1_mnguo")]
 texture_filter = 1
 position = Vector2(650, 300)
-rotation = 3.14159
 
 [node name="TopWall" type="StaticBody2D" parent="."]
 position = Vector2(0, 2)
