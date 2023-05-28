@@ -1,7 +1,10 @@
 extends Node
 
 func _input(event):
-	if event.is_action_pressed("ui_select"):
+	if event.is_action_pressed("esc"):
+		if not get_tree().paused: get_tree().paused = true
+		$Menu.visible = not $Menu.visible
+	elif event.is_action_pressed("ui_select"):
 		get_tree().paused = not get_tree().paused
 
 func _process(delta):
